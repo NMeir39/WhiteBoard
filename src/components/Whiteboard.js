@@ -1,11 +1,8 @@
 import { Navbar } from './Navbar';
 import { Sidebar } from './Sidebar';
 import { Canvas } from './Canvas';
-import ColorPicker from './ColorPicker';
 import React from 'react';
-
-// import ZIndex from 'react-z-index' // component, util
-// import { zIndex } from 'react-z-index' // decorator
+import { MODES } from '../globals/WhiteBoard';
 
 class Whiteboard extends React.Component {
     constructor(props) {
@@ -17,49 +14,40 @@ class Whiteboard extends React.Component {
             buttonEreasetPressed: false,
             buttonWashtPressed: false,
             buttonSwaptPressed: false,
+            mode: MODES.BRUSH,
             color: '#ff0000'
         }
     }
 
-    sellectPressed(e) {
-        console.log('sellect');
-        (!this.state.buttonSellectPressed) ? this.setState({
-            buttonSellectPressed: true
-        }) : this.setState({
-            buttonSellectPressed: false
-        })
+    selectPressed = (e) => {
+        this.setState({ mode: MODES.SELECT })
     }
 
-    BrushPressed(e) {
-        console.log('brush');
-        if (this.state.buttonBrushPressed === false)
-            this.setState({
-                buttonBrushPressed: true
-            })
-        else
-            this.setState({
-                buttonBrushPressed: false
-            })
+    brushPressed = (e) => {
+        this.setState({ mode: MODES.BRUSH })
     }
 
-    ColorPickerPressed = (color) => {
-       this.setState({ color })
+    cleanPressed = (e) => {
+        this.setState({ mode: MODES.CLEAN })
+    }
+
+    colorPickerPressed = (color) => {
+        this.setState({ color })
     }
 
     render() {
         return (
             <div className="App">
-                <Canvas statesOfBottons={this.state} colorHex={this.state.color}/>
+                <Canvas mode={this.state.mode} colorHex={this.state.color} />
                 <Navbar />
                 <Sidebar
-                    // isColorsPressed={this.ColorPickerPressed}
-                    isColorsPressed={this.ColorPickerPressed}
-                    isSelectPressed={() => this.sellectPressed()}
-                    isBrushPressed={() => this.BrushPressed()}
+                    isColorsPressed={this.colorPickerPressed}
+                    isSelectPressed={this.selectPressed}
+                    isCleanPressed={this.cleanPressed}
+                    isBrushPressed={this.brushPressed}
                     buttonsState={this.state}
                     style={{ position: 'relative', zIndex: '2' }}
                 />
-
             </div>
         );
     }
