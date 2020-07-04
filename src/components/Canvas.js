@@ -1,19 +1,13 @@
 import React from 'react';
 import { PaperScope } from 'paper';
 
-
 var paper
 var myPath;
 var currX;
 var currY;
 var isDown = false;
-// var segment = null;
-var colorHex = '#ff0000';
 
-export function Canvas(statesOfBottons) {
-
-    statesOfBottons = statesOfBottons.statesOfBottons;
-    console.log(statesOfBottons);
+export function Canvas({ statesOfBottons, colorHex, ...props }) {
 
     function selectPath() {
 
@@ -121,3 +115,6 @@ export function Canvas(statesOfBottons) {
     );
 }
 
+Canvas.defaultProps = {
+    colorHex: "#ff0000"
+}

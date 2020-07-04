@@ -17,7 +17,7 @@ class Whiteboard extends React.Component {
             buttonEreasetPressed: false,
             buttonWashtPressed: false,
             buttonSwaptPressed: false,
-            color: '#FF0'
+            color: '#ff0000'
         }
     }
 
@@ -47,7 +47,6 @@ class Whiteboard extends React.Component {
     }
 
     render() {
-        console.log({ newColor: this.state.color });
         return (
             <div className="App">
                 <Canvas statesOfBottons={this.state} colorHex={this.state.color}/>
