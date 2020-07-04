@@ -17,13 +17,9 @@ class Whiteboard extends React.Component {
             buttonEreasetPressed: false,
             buttonWashtPressed: false,
             buttonSwaptPressed: false,
-            color: ''
-
+            color: '#FF0'
         }
-
-
     }
-
 
     sellectPressed(e) {
         console.log('sellect');
@@ -46,47 +42,30 @@ class Whiteboard extends React.Component {
             })
     }
 
-    ColorPickerPressed(e) {
-
-        if (this.state.buttonColorsPressed === false) {
-            this.setState({
-                buttonColorPressed: true
-
-            })
-            console.log('color pressed');
-        }
-        else {
-            this.setState({
-                buttonColorPressed: false
-            })
-            console.log('color unpressed');
-        }
-
+    ColorPickerPressed = (color) => {
+       this.setState({ color })
     }
 
     render() {
-        
-        console.log(this.state.color);
+        console.log({ newColor: this.state.color });
         return (
             <div className="App">
-                <Canvas statesOfBottons={this.state} />
+                <Canvas statesOfBottons={this.state} colorHex={this.state.color}/>
                 <Navbar />
-                <ColorPicker color={this.state.color} showColorPicker={this.state.buttonColorsPressed} style={{ position: 'relative', zIndex: '3' }} />
-              
-              <Sidebar
-                    isColorsPressed={() => this.ColorPickerPressed()}
+                <Sidebar
+                    // isColorsPressed={this.ColorPickerPressed}
+                    isColorsPressed={this.ColorPickerPressed}
                     isSelectPressed={() => this.sellectPressed()}
                     isBrushPressed={() => this.BrushPressed()}
                     buttonsState={this.state}
                     style={{ position: 'relative', zIndex: '2' }}
                 />
-               
-                
+
             </div>
         );
     }
 
-    
+
 }
 
 export default Whiteboard;

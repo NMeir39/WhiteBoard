@@ -9,7 +9,8 @@ import Bubels from '../images/bubels.svg';
 import React, { useState } from 'react';
 import { CirclePicker } from 'react-color';
 
-export function Sidebar(props) {
+// export function Sidebar(props) {
+export function Sidebar({ isColorsPressed, isSelectPressed, ...props }) {
     const [color, setColor] = useState('#ff0000');
     //const [showColorPicker, setShowColorPicker] = useState(false);
     const [showColorPicker, setShowColorPicker] = useState(false);
@@ -18,8 +19,7 @@ export function Sidebar(props) {
         <div className="side-bar">
             <ul style={{ position: 'relative', zIndex: '2' }}>
 
-                <li className="icon"><a href="#sellect" onClick={props.isSelectPressed}><img src={Sellect} alt="selectbtn" /></a></li>
-                {/* <li className="icon"><a href="#colors" onClick={props.isColorsPressed}> <img src={Colors} alt="colorsbtn"/></a></li> */}
+                <li className="icon"><a href="#sellect" onClick={isSelectPressed}><img src={Sellect} alt="selectbtn" /></a></li>
                 <li className="icon" >
                     <a href="#colors" onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}>
                         <img src={Colors} alt="colorsbtn" />
@@ -27,21 +27,26 @@ export function Sidebar(props) {
                     {showColorPicker && (
                         <div className="color-picker">
                             <CirclePicker
-                                // style={{ position: 'fixed', zIndex: '3' }}
                                 color={color}
-                                onChangeComplete={updateColor => { setColor(updateColor.hex); console.log(color) }}
+                                onChangeComplete={updateColor => {
+                                    setColor(updateColor.hex);
+                                    isColorsPressed(updateColor.hex)
+                                }}
                             />
                         </div>
                     )}
                 </li>
-                <li className="icon"><a href="#clean"><img src={Clean} alt="cleanbtn" /></a></li>
-                <li className="icon"><a href="#brushes" onClick={props.isBrushPressed}><img src={Brushes} alt="brushesbtn" /></a></li>
+                <li className="icon">
+                    <a href="#clean"><img src={Clean} alt="cleanbtn" /></a></li>
+                <li className="icon">
+                    <a href="#brushes" onClick={props.isBrushPressed}>
+                        <img src={Brushes} alt="brushesbtn" />
+                    </a>
+                </li>
                 <li className="icon"><a href="#wash"><img src={Wash} alt="washbtn" /></a></li>
                 <li className="icon"><a href="#swap"><img src={Swap} alt="swapbtn" /></a></li>
                 <li className="icon"><a href="#bubels"><img src={Bubels} alt="Bublesbtn" /></a></li>
-
             </ul>
-
         </div>
     );
 }
