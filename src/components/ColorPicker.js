@@ -8,29 +8,13 @@ export default function Color(props) {
     
     return (
         <div>
-            {/* <button onClick={() => setShowColorPicker(showColorPicker => !showColorPicker)}>
-                {showColorPicker ? 'Close color picker' : 'pick a color'}
-            </button> */}
-            {/* {showColorPicker && (
-                <CirclePicker
-                    className="colorpicker"
-                    color={props.color}
-                    onChangeComplete={updateColor => { setColor(updateColor.hex) }}
-                    
-                />
-            )} */}
             {props.showColorPicker && (
                 <CirclePicker
                     className="colorpicker"
                     color={props.color}
                     onChangeComplete={updateColor => { setColor(updateColor.hex) }}
-
                 />
             )}
-
-{/* <h2>Hex {color}</h2> */}
-
         </div>
     );
-
 }

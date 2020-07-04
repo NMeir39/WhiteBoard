@@ -4,35 +4,30 @@ a {
 }
 
 .top-navbar {
-     background-color: #333;
-     width: 100vw;
+  background-color: #333;
+  width: 100vw;
 }
 
 .navbar {
-    display: inline-flex;
-    list-style-type: none;
-    margin: 0;
-    padding: 0px 25px;
-    overflow: hidden;
-    width: 400px;
-    height: 49px;
-    position: relative;
-  }
+  display: inline-flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0px 25px;
+  overflow: hidden;
+  width: 400px;
+  height: 49px;
+  position: relative;
+}
 
-  .navbar.left {
-    left: 60px;
-  }
+.navbar.right {
+  float: right;
+}
 
-  .navbar.right {
-    float: right;
-  }
+.navbar li {
+  margin: 0px 10px;
+  line-height: 40px;
+}
 
-  .navbar li {
-     margin: 0px 10px;
-     line-height: 40px;
-  }
-
-  .nvabar li a:hover {
-    background-color: #111;
-  }
-  
+.nvabar li a:hover {
+  background-color: #111;
+}
