@@ -46,9 +46,16 @@
 }
 
 .color-picker {
-  position:fixed;
+  position: fixed;
   display: block;
   z-index: 999;
   background-color: lightblue;
   padding: 10px;
+}
+
+.brush-up,
+.brush-down {
+  color: white;
+  font-size: 44px;
+  line-height: 20px;
 }

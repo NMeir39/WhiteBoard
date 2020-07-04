@@ -7,6 +7,8 @@ var canvas;
 var myPath;
 var currX;
 var currY;
+var prevX;
+var prevY;
 var isDown = false;
 var selectedItem = null;
 
@@ -24,7 +26,7 @@ const checkOrCreatePaperJsObject = () => {
     }
 }
 
-export function Canvas({ mode, colorHex, ...props }) {
+export function Canvas({ mode, colorHex, onChange, brushSize, ...props }) {
 
     function onMouseDown(e) {
         isDown = true;
@@ -36,7 +38,19 @@ export function Canvas({ mode, colorHex, ...props }) {
             // Create a Paper.js Path to draw a line into it:
             myPath = new paper.Path();
             myPath.strokeColor = colorHex;
-            myPath.strokeWidth = 8;
+            myPath.strokeWidth = brushSize;
+        } else if (mode === MODES.BUBBLES) {
+            prevX = currX;
+            prevY = currY;
+            myPath = new paper.Path();
+            myPath.strokeColor = colorHex;
+            myPath.strokeWidth = 1;
+            var circle = new paper.Path.Circle({
+                center: point,
+                radius: Math.random() * 10
+            });
+            circle.strokeColor = colorHex;
+            myPath.add(circle);
         } else if (mode === MODES.CLEAN) {
             var hitResult = paper.project.hitTest(point, hitOptions);
             if (!hitResult) {
@@ -48,16 +62,36 @@ export function Canvas({ mode, colorHex, ...props }) {
             }
             hitResult.item.remove();
         }
+        onChange(paper.project.exportJSON({ asString: false }), paper.project.exportJSON({ asString: true }));
     }
 
     function onMouseMove(e) {
         checkOrCreatePaperJsObject();
+        var distance
         currX = e.clientX - canvas.offsetLeft;
         currY = e.clientY - canvas.offsetTop;
+        if (currX) {
+            const distanceFromPreviousX = (e.clientX - canvas.offsetLeft) - currX;
+            const distanceFromPreviousY = (e.clientX - canvas.offsetLeft) - currY;
+            distance = (Math.abs(currX - prevX) + Math.abs(currY - prevY)) / 2
+        }
         const point = new paper.Point(currX, currY);
         if (mode === MODES.BRUSH) {
             if (!isDown) return;
             myPath.add(point);
+        } else if (mode === MODES.BUBBLES) {
+            if (!isDown) return;
+            if (distance < 7) return
+            prevX = currX;
+            prevY = currY;
+            const delta = Math.abs(((e.movementY + e.movementX) / 2))
+            var circle = new paper.Path.Circle({
+                center: point,
+                radius: delta * 7
+            });
+            circle.strokeColor = colorHex;
+            circle.strokeWidth = 1;
+            myPath.add(circle);
         } else if (mode === MODES.SELECT) {
             if (isDown) {
                 if (selectedItem) {
@@ -73,6 +107,7 @@ export function Canvas({ mode, colorHex, ...props }) {
                 selectedItem = hitResult.item;
             }
         }
+        onChange(paper.project.exportJSON({ asString: false }), paper.project.exportJSON({ asString: true }));
     }
 
     function onMouseUp(event) {
@@ -88,5 +123,8 @@ export function Canvas({ mode, colorHex, ...props }) {
 }
 
 Canvas.defaultProps = {
-    colorHex: "#ff0000"
+    mode: MODES.BRUSH,
+    colorHex: "#ff0000",
+    onChange: () => { },
+    brushSize: 8
 }

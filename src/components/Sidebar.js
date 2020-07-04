@@ -9,7 +9,7 @@ import Bubels from '../images/bubels.svg';
 import React, { useState } from 'react';
 import { CirclePicker } from 'react-color';
 
-export function Sidebar({ isColorsPressed, isSelectPressed, ...props }) {
+export function Sidebar({ isColorsPressed, isBrushPressed, isSelectPressed, isCleanPressed, isBubblesPressed, isBrushUp, isBrushDown, ...props }) {
     const [color, setColor] = useState('#ff0000');
     const [showColorPicker, setShowColorPicker] = useState(false);
 
@@ -34,16 +34,26 @@ export function Sidebar({ isColorsPressed, isSelectPressed, ...props }) {
                     )}
                 </li>
                 <li className="icon">
-                    <a href="#clean"><img src={Clean} onClick={props.isCleanPressed} alt="cleanbtn" /></a></li>
+                    <a href="#clean"><img src={Clean} onClick={isCleanPressed} alt="cleanbtn" /></a></li>
                 <li className="icon">
-                    <a href="#brushes" onClick={props.isBrushPressed}>
+                    <a href="#brushes" onClick={isBrushPressed}>
                         <img src={Brushes} alt="brushesbtn" />
                     </a>
                 </li>
-                <li className="icon"><a href="#wash"><img src={Wash} alt="washbtn" /></a></li>
-                <li className="icon"><a href="#swap"><img src={Swap} alt="swapbtn" /></a></li>
-                <li className="icon"><a href="#bubels"><img src={Bubels} alt="Bublesbtn" /></a></li>
+                <li className="icon" onClick={isBubblesPressed}><a href="#bubels"><img src={Bubels} alt="Bublesbtn" /></a></li>
+                <li className="icon brush-up" onClick={isBrushUp} ><a href="#brush-up">+</a></li>
+                <li className="icon brush-down" onClick={isBrushDown} ><a href="#brush-down">-</a></li>
             </ul>
         </div>
     );
+}
+
+Sidebar.defaultProps = {
+    isColorsPressed: () => { },
+    isBrushPressed: () => { },
+    isSelectPressed: () => { },
+    isCleanPressed: () => { },
+    isBubblesPressed: () => { },
+    isBrushUp: () => { },
+    isBrushDown: () => { }
 }
