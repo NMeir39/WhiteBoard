@@ -38,8 +38,7 @@
   }
   
   .icon:hover {
-    background-color: rgb(43, 44, 43);
-    /* height: 50px; */    
+    background-color: rgb(43, 44, 43);  
   }
 
   .icon:active{
